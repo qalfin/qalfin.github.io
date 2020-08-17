@@ -1,0 +1,3409 @@
+openapi: 3.0.0
+info:
+  title: Indibox Dashboard API
+  description: 'API for Indibox '
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/telkomdds/Indibox-Dashboard/1.0.0
+  description: SwaggerHub API Auto Mocking
+- url: https://virtserver.swaggerhub.com/telkomdds/Indiplay/1.0.0
+  description: SwaggerHub API Auto Mocking
+paths:
+  /content/v1/list-combination:
+    get:
+      tags:
+      - List Combination
+      summary: get List Sequence
+      description: get List Combination
+      parameters:
+      - name: page
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: size
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseGetListCombination'
+        "400":
+          description: Page must start from 1
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pageStart'
+        "404":
+          description: Not Found List Combination
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listCombinationnotFound'
+      security:
+      - basicAuth: []
+  /content/v1/combination/{combinationId}:
+    put:
+      tags:
+      - List Combination
+      summary: update combination
+      description: update combination
+      parameters:
+      - name: combinationId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/addNewListCombination'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseUpdateCombination'
+        "401":
+          description: Role Not Allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/roleNotAllowed'
+        "404":
+          description: Not Found List Combination
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listCombinationnotFound'
+      security:
+      - bearerToken: []
+    delete:
+      tags:
+      - List Combination
+      summary: delete list combination
+      description: delete list combination
+      parameters:
+      - name: combinationId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseSuccessDeleteCombination'
+        "401":
+          description: Role Not Allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/roleNotAllowed'
+        "404":
+          description: Not Found List Combination
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listCombinationnotFound'
+      security:
+      - bearerToken: []
+  /content/v1/combination:
+    post:
+      tags:
+      - List Combination
+      summary: add new combination
+      description: add new combination
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/addNewListCombination'
+      responses:
+        "201":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseCreateCombination'
+        "401":
+          description: Role Not Allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/roleNotAllowed'
+      security:
+      - bearerToken: []
+  /content/v1/combination/duplicate/{combinationId}:
+    post:
+      tags:
+      - List Combination
+      summary: add new combination & duplicate
+      description: add new combination & duplicate
+      parameters:
+      - name: combinationId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/addNewListCombination'
+      responses:
+        "201":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseCreateCombination'
+        "401":
+          description: Role Not Allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/roleNotAllowed'
+      security:
+      - bearerToken: []
+  /content/v1/listsequence-order/{sequenceId}:
+    put:
+      tags:
+      - Update Order List Sequence
+      summary: update order List Sequence
+      description: update order List Sequence
+      parameters:
+      - name: sequenceId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: sequence
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateListSequence'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseSuccessUpdateListSequence'
+        "400":
+          description: Can insert list sequence
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cannotInsertListSequence'
+        "401":
+          description: Role Not Allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/roleNotAllowed'
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/notFoundCategory'
+      security:
+      - bearerToken: []
+  /content/v1/listsequence/{sequenceId}:
+    put:
+      tags:
+      - List Sequence
+      summary: update sequence
+      description: update sequence
+      parameters:
+      - name: sequenceId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/addNewListSequence'
+      responses:
+        "200":
+          description: Success updated list sequence
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseSuccessUpdatedListSequence'
+        "401":
+          description: Role Not Allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/roleNotAllowed'
+        "404":
+          description: Not Found List Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listSequencenotFound'
+      security:
+      - bearerToken: []
+    delete:
+      tags:
+      - List Sequence
+      summary: get List Sequence
+      description: get List Sequence
+      parameters:
+      - name: sequenceId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseSuccessDeleteListSequence'
+        "400":
+          description: Can not delete list sequence
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responsecannotDeleteListSequence'
+        "401":
+          description: Role Not Allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/roleNotAllowed'
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listSequenceNotFound'
+      security:
+      - bearerToken: []
+  /content/v1/listsequence:
+    get:
+      tags:
+      - List Sequence
+      summary: get List Sequence
+      description: get List Sequence
+      parameters:
+      - name: page
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: size
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseGetListSequence'
+        "401":
+          description: Role Not Allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/roleNotAllowed'
+        "404":
+          description: Not Found List Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listSequencenotFound'
+      security:
+      - bearerToken: []
+    post:
+      tags:
+      - List Sequence
+      summary: add new list sequence
+      description: add new list sequence
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/addNewListSequence'
+      responses:
+        "200":
+          description: Success add new list sequence
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseSuccessAddListSequence'
+        "400":
+          description: Cannot Insert List Sequence
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cannotInsertListSequence'
+        "401":
+          description: Role Not Allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/roleNotAllowed'
+        "404":
+          description: Not Found Category
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/notFoundCategory'
+      security:
+      - bearerToken: []
+  /user/v1/analysis-content:
+    get:
+      tags:
+      - Analytic Content
+      summary: summary for likes & watch
+      description: summary for likes & watch
+      parameters:
+      - name: type
+        in: query
+        description: type view, like , comment
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: success get summary view content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+      security:
+      - bearerToken: []
+  /content/v1/search:
+    post:
+      tags:
+      - Search
+      summary: search content
+      description: search content
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/searchContent'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseSuccessSearch'
+      security:
+      - basicAuth: []
+  /content/v1/sequence/{contentId}:
+    put:
+      tags:
+      - Content
+      summary: update sequence content
+      description: update sequence content
+      parameters:
+      - name: contentId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: to
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseUpdateContent'
+      security:
+      - basicAuth: []
+  /content/v1/bulk:
+    post:
+      tags:
+      - Content
+      summary: admin bulk insert content from csv
+      description: admin bulk insert content from csv
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/insertbulk'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseSuccessInsertBulk'
+      security:
+      - basicAuth: []
+  /content/v1/list:
+    get:
+      tags:
+      - Content
+      summary: get List Content
+      description: get List Content
+      parameters:
+      - name: page
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: size
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseGetContent'
+      security:
+      - basicAuth: []
+  /content/v1/{contentId}:
+    get:
+      tags:
+      - Content
+      summary: detail content 1
+      description: get detail content
+      parameters:
+      - name: contentId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseGetContent1'
+        "404":
+          description: content not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/contentNotFound'
+      security:
+      - basicAuth: []
+    put:
+      tags:
+      - Content
+      summary: update content 1
+      description: update content
+      parameters:
+      - name: contentId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateContent1'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseUpdateContent'
+      security:
+      - basicAuth: []
+    delete:
+      tags:
+      - Content
+      summary: delete content 1
+      description: delete content
+      parameters:
+      - name: contentId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseDeleteContent'
+      security:
+      - basicAuth: []
+  /content/v1/category/sequence/{contentId}:
+    put:
+      tags:
+      - Category
+      summary: update category
+      description: update Sequence category
+      parameters:
+      - name: contentId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: to
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/bodyUpdateCategory1'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseUpdateCategories'
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseForbidden'
+      security:
+      - bearerToken: []
+  /content/v1/category/{id}:
+    put:
+      tags:
+      - Category
+      summary: update category
+      description: update category
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/bodyUpdateCategory1'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseUpdateCategories'
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseForbidden'
+      security:
+      - bearerToken: []
+    delete:
+      tags:
+      - Category
+      summary: deletete category
+      description: delete category
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseDeleteCategories'
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseForbidden'
+      security:
+      - bearerToken: []
+  /content/v1/category/{categoryId}:
+    get:
+      tags:
+      - Category
+      summary: get category
+      description: get category
+      parameters:
+      - name: categoryId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseGetOneCategories'
+      security:
+      - basicAuth: []
+  /content/v1/category:
+    get:
+      tags:
+      - Category
+      summary: get category
+      description: get category
+      parameters:
+      - name: page
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: size
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseGetCategories'
+        "401":
+          description: Role Not Allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/roleNotAllowed'
+      security:
+      - basicAuth: []
+    post:
+      tags:
+      - Category
+      summary: add new category
+      description: add new category
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/bodyAddCategory'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseAddCategories'
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseForbidden'
+      security:
+      - bearerToken: []
+  /content/v1/tags/{id}:
+    get:
+      tags:
+      - Tags
+      summary: get detail tags
+      description: get detail tags
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseGetDetailTags'
+      security:
+      - basicAuth: []
+    put:
+      tags:
+      - Tags
+      summary: update tags
+      description: update tags
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/bodyUpdateTags'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseUpdateTags'
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseForbidden'
+      security:
+      - bearerToken: []
+    delete:
+      tags:
+      - Tags
+      summary: delete Tags
+      description: delete Tags
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseDeletetags'
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseForbidden'
+      security:
+      - bearerToken: []
+  /content/v1/tags:
+    get:
+      tags:
+      - Tags
+      summary: get all Tags
+      description: get all Tags
+      parameters:
+      - name: page
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: size
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseGetTags'
+      security:
+      - basicAuth: []
+    post:
+      tags:
+      - Tags
+      summary: add new Tags
+      description: add new Tags
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/bodyAddTags'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseAddTags'
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseForbidden'
+      security:
+      - bearerToken: []
+  /users/v1/list-channel/{channelGroupId}:
+    get:
+      tags:
+      - Channel
+      summary: Admin Auth get list  detail channel
+      description: Admin get list detail channel
+      parameters:
+      - name: channelGroupId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: size
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: success get list channel by category group
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseGetListChannelGategoryGroup'
+      security:
+      - bearerToken: []
+  /users/v1/list-detail-channel:
+    get:
+      tags:
+      - Channel
+      summary: Admin Auth get list  detail channel
+      description: Admin get list detail channel
+      responses:
+        "200":
+          description: success get list detail channel
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseGetListDetailChannel'
+      security:
+      - bearerToken: []
+  /users/v1/channel:
+    get:
+      tags:
+      - Channel
+      summary: Admin Auth get list  channel
+      description: Admin get list channel channel
+      responses:
+        "200":
+          description: success get list channel
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseGetListChannel'
+      security:
+      - bearerToken: []
+    put:
+      tags:
+      - Channel
+      summary: Admin Auth update channel
+      description: Admin update channel
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/body'
+      responses:
+        "200":
+          description: success update channel
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseUpdateChannel'
+      security:
+      - bearerToken: []
+    post:
+      tags:
+      - Channel
+      summary: Admin Auth create channel
+      description: Admin create channel
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/body_1'
+      responses:
+        "200":
+          description: success create channel
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseCreateChannel'
+      security:
+      - bearerToken: []
+  /users/v1/channel-group:
+    put:
+      tags:
+      - Channel Group
+      summary: Admin update channel group
+      description: Admin update channel group
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/body_2'
+      responses:
+        "200":
+          description: success update channel group
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseUpdateChannelGroup'
+      security:
+      - bearerToken: []
+    post:
+      tags:
+      - Channel Group
+      summary: Admin Auth create channel group
+      description: Admin create channel group
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/body_3'
+      responses:
+        "200":
+          description: success create channel group
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseCreateChannel'
+        "409":
+          description: role not allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseCreateChannelNotAllowed'
+      security:
+      - bearerToken: []
+  /users/v1/list-channel-group:
+    get:
+      tags:
+      - Channel Group
+      summary: get list channel group
+      description: get list channel group
+      parameters:
+      - name: page
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: size
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: search
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: response success get list channel group
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseSuccessGetChannelGroup'
+      security:
+      - bearerToken: []
+  /users/v1/list-channel-group/{adminId}:
+    get:
+      tags:
+      - Channel Group
+      summary: get list channel group
+      description: get list channel group
+      parameters:
+      - name: adminId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: page
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: size
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: search
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: response success get list channel group
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseSuccessGetChannelGroup'
+      security:
+      - bearerToken: []
+  /users/v1/list-detail-channel-group/{channelGroupId}:
+    get:
+      tags:
+      - Channel Group
+      summary: get detail channel group
+      description: get detail channel group
+      parameters:
+      - name: channelGroupId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: response success get detail channel group
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseSuccessGetDetailChannelGroup'
+      security:
+      - bearerToken: []
+  /users/v1/{id}:
+    get:
+      tags:
+      - Administrator
+      summary: super.admin get one admin
+      description: get one admin
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: response super admin success get one admin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseSuccessGetOneAdmin'
+        "404":
+          description: response admin profile not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseAdminNotFound'
+      security:
+      - bearerToken: []
+    put:
+      tags:
+      - Administrator
+      summary: update user admin
+      description: update user admin
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/bodyAddAdmin'
+      responses:
+        "201":
+          description: response success admin update user admin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseSuccessUpdateAdmin'
+        "401":
+          description: access token expired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/accessTokenExpired'
+      security:
+      - bearerToken: []
+    delete:
+      tags:
+      - Administrator
+      summary: delete user admin
+      description: delete user admin
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: response success admin delete user admin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseSuccessDeleteAdmin'
+      security:
+      - bearerToken: []
+  /users/v1/create-admin:
+    post:
+      tags:
+      - Administrator
+      summary: super.admin create admin
+      description: add admin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/bodyAddAdmin'
+      responses:
+        "201":
+          description: response super admin success add admin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseSuccessAddAdmin'
+        "401":
+          description: access token expired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/accessTokenExpired'
+        "409":
+          description: response admin already exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseAdminAlreadyExixst'
+      security:
+      - bearerToken: []
+  /users/v1/login-admin:
+    post:
+      tags:
+      - Authentication
+      summary: login admin
+      description: login admin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loginAdmin'
+      responses:
+        "200":
+          description: response success login admin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseLoginAdmin'
+      security:
+      - basicAuth: []
+  /users/v1/list-admin:
+    get:
+      tags:
+      - Administrator
+      summary: super.admin get all admin
+      description: get admin
+      parameters:
+      - name: page
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: size
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: response super admin success get all admin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseSuccessGetAdmin'
+        "401":
+          description: access token expired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/accessTokenExpired'
+      security:
+      - bearerToken: []
+  /users/v1/list-users/analysis:
+    get:
+      tags:
+      - Admin - Analysis User Sign in & Guest
+      summary: get list analysis user
+      description: get List analysis user
+      parameters:
+      - name: page
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: size
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: filter
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: response analysis user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseAnalysisUser'
+      security:
+      - bearerToken: []
+  /users/v1/list-users:
+    get:
+      tags:
+      - Admin - User
+      summary: get list all user
+      description: get List user
+      parameters:
+      - name: page
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: size
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: response list customer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseListCustomer'
+      security:
+      - bearerToken: []
+  /users/v1/analysis-content-group:
+    get:
+      tags:
+      - Analytic Content
+      summary: get analysis content
+      description: get analysis content
+      responses:
+        "200":
+          description: response get analysis content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseGetAnalysisContent'
+      security:
+      - bearerToken: []
+  /users/v1/analysis-user:
+    get:
+      tags:
+      - Analysis User
+      summary: get active user
+      description: get active user
+      parameters:
+      - name: time
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: daily, mothly
+      responses:
+        "200":
+          description: 'response get active user '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseGetDailyActive'
+      security:
+      - bearerToken: []
+  /content/v1/views:
+    get:
+      tags:
+      - Analytic Content
+      summary: get view Analysis
+      description: get view Analysis
+      parameters:
+      - name: filter
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: daily, mothly
+      responses:
+        "200":
+          description: response get view summary
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseGetViewSummary'
+      security:
+      - bearerToken: []
+  /fcm/v1/notification:
+    post:
+      tags:
+      - Notif
+      summary: admin send spesific notif
+      description: send spesific notif notif
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/bodySendNotifSpesific'
+      responses:
+        "200":
+          description: response success send notification
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseSuccessSendNotification'
+      security:
+      - bearerToken: []
+  /fcm/v1/blast-notification:
+    post:
+      tags:
+      - Notif
+      summary: admin send notif
+      description: send notif
+      parameters:
+      - name: topic
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/bodySendNotif'
+      responses:
+        "200":
+          description: response success send notification
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseSuccessSendNotification'
+      security:
+      - bearerToken: []
+  /fcm/v1/notification/{notificationId}:
+    get:
+      tags:
+      - Notif
+      summary: admin get detail notif
+      description: get detail notif
+      parameters:
+      - name: notificationId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: response success get detail notification
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseSuccessGetDetailNotification'
+      security:
+      - bearerToken: []
+  /fcm/v1/notification/list:
+    get:
+      tags:
+      - Notif
+      summary: admin list notif
+      description: get list notif
+      parameters:
+      - name: page
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: size
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: response success get list  notification
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseSuccessGetListNotification'
+      security:
+      - bearerToken: []
+components:
+  schemas:
+    responseSuccessDeleteCombination:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: true
+        message: List combinations is successfuly deleted
+        code: 200
+    addNewListCombination:
+      properties:
+        combinationId:
+          type: string
+        combinationName:
+          type: string
+        combinationDesc:
+          type: string
+        status:
+          type: string
+        createdAt:
+          type: string
+      example:
+        combinationName: Homepage v2
+        combinationDesc: ini adalah combination homepage
+        status: Home active
+    updateListSequence:
+      properties:
+        sequenceId:
+          type: string
+        sequenceName:
+          type: string
+        sequenceDesc:
+          type: integer
+        categorySource:
+          type: object
+        sequence:
+          type: integer
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+      example:
+        sequenceName: Terbaru 2020
+        sequenceDesc: Terbaru lorem ipsum
+        categorySource:
+          categoryId: a2ee8825-27c2-4b9b-88f0-7cc26fd62cd1
+          categoryName: Premium
+        sequence: 0
+        createdAt: 2020-04-08 10:12:12
+        updatedAt: 2020-04-08 10:12:12
+    responseSuccessUpdateListSequence:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        code:
+          type: integer
+        message:
+          type: string
+      example:
+        success: true
+        data:
+        - sequenceId: 3f293e34-68d2-4c9a-b3fb-b74d6089f5b5
+          sequenceName: Terbaru 2020
+          sequenceDesc: Terbaru lorem ipsum
+          categorySource:
+            categoryId: a2ee8825-27c2-4b9b-88f0-7cc26fd62cd1
+            categoryName: Premium
+          sequence: 0
+          createdAt: 2020-04-08 10:12:12
+          updatedAt: 2020-04-08 10:12:12
+        - sequenceId: 3f293e34-68d2-4c9a-b3fb-b74d6089f5b9
+          sequenceName: Ramadhan
+          sequenceDesc: Ramadhan lorem ipsum
+          categorySource:
+            categoryId: a2ee8825-27c2-4b9b-88f0-7cc26fd62cd1
+            categoryName: Premium
+          sequence: 1
+          createdAt: 2020-04-08 10:12:12
+          updatedAt: 2020-04-08 10:12:12
+        - sequenceId: 3f293e34-68d2-4c9a-b3fb-b74d6089f5b2
+          sequenceName: Marvel
+          sequenceDesc: Marvel
+          categorySource:
+            categoryId: a2ee8825-27c2-4b9b-88f0-7cc26fd62cd1
+            categoryName: Premium
+          sequence: 2
+          createdAt: 2020-04-08 10:12:12
+          updatedAt: 2020-04-08 10:12:12
+        meta:
+          page: 1
+          size: 3
+          totalPage: 1
+          totalData: 3
+        code: 200
+        message: list sequence is successfully updated
+    responseSuccessDeleteListSequence:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: true
+        message: list sequence is successfully deleted
+        code: 200
+    listSequenceNotFound:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: false
+        message: not found list sequence
+        code: 404
+    responsecannotDeleteListSequence:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: false
+        message: can not delete list sequence
+        code: 400
+    responseUpdateCombination:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: true
+        data:
+          combinationId: 814d1568-b08b-4155-a2c4-0a7ac2e7cda0
+          combinationName: Homepage v2
+          combinationDesc: ini adalah combination homepage
+          status: Home active
+          createdAt: 17-Jun-2020 22:09:08
+          isDeleted: false
+        message: create combination is successfuly updated
+        code: 200
+    responseCreateCombination:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: true
+        data:
+          data:
+            combinationId: 814d1568-b08b-4155-a2c4-0a7ac2e7cda0
+            combinationName: Homepage v2
+            combinationDesc: ini adalah combination homepage
+            status: Home active
+            createdAt: 17-Jun-2020 22:09:08
+            isDeleted: false
+        message: create combination is successfuly created
+        code: 201
+    responseGetListCombination:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: true
+        data:
+        - combinationId: 814d1568-b08b-4155-a2c4-0a7ac2e7cda0
+          combinationName: Homepage v2
+          combinationDesc: ini adalah combination homepage
+          status: Home active
+          createdAt: 17-Jun-2020 22:09:08
+          updatedAt: ""
+        - combinationId: b688a94a-d86d-4716-a670-e4959a8a2d83
+          combinationName: Homepage v1
+          combinationDesc: ini adalah combination homepage
+          status: Home active
+          createdAt: 17-Jun-2020 22:09:02
+          updatedAt: ""
+        - combinationId: d33bdbeb-6ad6-4ff3-b3b7-530b77c6916e
+          combinationName: Moviepage v1
+          combinationDesc: ini adalah combination movie page
+          status: Movie active
+          createdAt: 17-Jun-2020 22:08:44
+          updatedAt: ""
+        meta:
+          page: 1
+          size: 2
+          totalPage: 1
+          totalData: 2
+        message: get list combination succeed
+        code: 200
+    cannotInsertListSequence:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: false
+        message: can not insert list sequence
+        code: 400
+    notFoundCategory:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: false
+        message: not found category
+        code: 404
+    responseSuccessAddListSequence:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        code:
+          type: integer
+        message:
+          type: string
+      example:
+        success: true
+        data:
+          sequenceId: 3f293e34-68d2-4c9a-b3fb-b74d6089f5b5
+          sequenceName: Terbaru 2020
+          sequenceDesc: Terbaru lorem ipsum
+          categorySource:
+            categoryId: a2ee8825-27c2-4b9b-88f0-7cc26fd62cd1
+            categoryName: Premium
+          sequence: 0
+          pinnedContent:
+          - contentId: a2ee8825-27c2-4b9b-88f0-7cc26fd62cd1
+            contentName: 'Sharknado: 1'
+            images: https://path/to/image
+            sequence: 0
+          - contentId: a2ee8825-27c2-4b9b-88f0-7cc26fd62cd2
+            contentName: 'Sharknado: 2'
+            images: https://path/to/image
+            sequence: 1
+          - contentId: a2ee8825-27c2-4b9b-88f0-7cc26fd62cd3
+            contentName: 'Sharknado: 3'
+            images: https://path/to/image
+            sequence: 2
+          createdAt: 2020-04-08 10:12:12
+          updatedAt: 2020-04-08 10:12:12
+        code: 200
+        message: list sequence is successfully created
+    responseSuccessUpdatedListSequence:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        code:
+          type: integer
+        message:
+          type: string
+      example:
+        success: true
+        data:
+          sequenceId: 3f293e34-68d2-4c9a-b3fb-b74d6089f5b5
+          sequenceName: Terbaru 2020
+          sequenceDesc: Terbaru lorem ipsum
+          categorySource:
+            categoryId: a2ee8825-27c2-4b9b-88f0-7cc26fd62cd1
+            categoryName: Premium
+          sequence: 0
+          pinnedContent:
+          - contentId: a2ee8825-27c2-4b9b-88f0-7cc26fd62cd1
+            contentName: 'Sharknado: 1'
+            images: https://path/to/image
+            sequence: 0
+          - contentId: a2ee8825-27c2-4b9b-88f0-7cc26fd62cd2
+            contentName: 'Sharknado: 2'
+            images: https://path/to/image
+            sequence: 1
+          - contentId: a2ee8825-27c2-4b9b-88f0-7cc26fd62cd3
+            contentName: 'Sharknado: 3'
+            images: https://path/to/image
+            sequence: 2
+          createdAt: 2020-04-08 10:12:12
+          updatedAt: 2020-04-08 10:12:12
+        code: 200
+        message: list sequence is successfully updated
+    addNewListSequence:
+      properties:
+        sequenceName:
+          type: string
+        sequenceDesc:
+          type: string
+        categorySource:
+          type: string
+        sequence:
+          type: integer
+        pinnedContent:
+          type: array
+      example:
+        sequenceName: Terbaru
+        sequenceDesc: list konten terbaru 2020
+        categorySource: Movie
+        sequence: 0
+        pinnedContent:
+        - contentId: a2ee8825-27c2-4b9b-88f0-7cc26fd62cd1
+          contentName: 'Sharknado: 1'
+          images: https://path/to/image
+          sequence: 0
+        - contentId: a2ee8825-27c2-4b9b-88f0-7cc26fd62cd2
+          contentName: 'Sharknado: 2'
+          images: https://path/to/image
+          sequence: 1
+        - contentId: a2ee8825-27c2-4b9b-88f0-7cc26fd62cd3
+          contentName: 'Sharknado: 3'
+          images: https://path/to/image
+          sequence: 2
+    roleNotAllowed:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: false
+        message: your role is not allowed
+        code: 401
+    pageStart:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: false
+        message: Page must start from 1
+        code: 400
+    listSequencenotFound:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: false
+        message: not found list sequence
+        code: 404
+    listCombinationnotFound:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: false
+        message: not found list combination
+        code: 404
+    responseGetListSequence:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: true
+        data:
+        - sequenceId: 86f3f1af-0651-49ab-af2c-5e983b37974a
+          sequenceName: Terbaru 2020
+          sequenceDesc: List Sequence terbaru
+          categorySource:
+            categoryId: 86f3f1af-0651-49ab-af2c-5e983b37974a
+            categoryName: Premium
+          sequence: 0
+          createdAt: 2020-04-08 10:12:12
+          updatedAt: 2020-04-08 10:12:12
+        - sequenceId: 3099ioa-09g2-4c9a-b3fb-9987dhfkl
+          sequenceName: Ramadhan
+          sequenceDesc: List Ramadhan
+          categorySource:
+            categoryId: a2ee8825-27c2-4b9b-88f0-7cc26fd62cd1
+            categoryName: Islamic
+          sequence: 1
+          createdAt: 2020-04-08 10:12:12
+          updatedAt: 2020-04-08 10:12:12
+        meta:
+          page: 1
+          size: 2
+          totalPage: 1
+          totalData: 2
+        message: list sequence
+        code: 200
+    responseGetDetailTags:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: true
+        data:
+          tagId: 86f3f1af-0651-49ab-af2c-5e983b37974a
+          name: Action
+          createdAt: 2020-04-15T08:28:03+0700
+        message: detail tag
+        code: 200
+    contentNotFound:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: false
+        message: content not found
+        code: 404
+    responseGetAnalysisContent:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: true
+        data:
+        - channelGroupId: 60b84981-2a09-4980-adcf-f290e3b69ba9
+          cgName: BE Group
+          channel:
+          - channelId: 91e0eaf5-b247-4128-8ed2-64396a1f0e0a
+            channelName: NET TVVVVVV
+            analysis:
+            - month: 1
+              countComment: 0
+              countView: 0
+              countLike: 0
+              countDuration: 0
+            - month: 2
+              countComment: 0
+              countView: 0
+              countLike: 0
+              countDuration: 0
+            - month: 3
+              countComment: 0
+              countView: 0
+              countLike: 0
+              countDuration: 0
+            - month: 4
+              countComment: 0
+              countView: 0
+              countLike: 0
+              countDuration: 0
+        message: Get Analysis Content Group
+        code: 200
+    accessTokenExpired:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: false
+        message: Access token expired
+        code: 401
+    responseGetListChannelGategoryGroup:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: true
+        data:
+        - channelGroupId: 60b84981-2a09-4980-adcf-f290e3b69ba9
+          createdAt: 2020-02-06T20:15:57+07:00
+          image: http://minio-indibox-plus-storage-indibox-plus-dev.vsan-apps.playcourt.id/channels/image/91e0eaf5-b247-4128-8ed2-64396a1f0e0a/nettv-701.png
+          isDelete: false
+          name: NET TV
+          channelId: 91e0eaf5-b247-4128-8ed2-64396a1f0e0a
+          updatedAt: 2020-02-06T20:15:57+07:00
+        - channelGroupId: 60b84981-2a09-4980-adcf-f290e3b69ba9
+          createdAt: 2020-02-06T20:15:57+07:00
+          image: http://minio-indibox-plus-storage-indibox-plus-dev.vsan-apps.playcourt.id/channels/image/default.png
+          isDelete: false
+          name: Channel  be test
+          channelId: cd37dbcc-db13-44e1-a3a0-8fefcc0c788e
+        meta:
+          page: 1
+          count: 3
+          totalPage: 1
+          totalData: 2
+        message: Get list channel by channel group id succeed
+        code: 200
+    responseGetListDetailChannel:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: true
+        data:
+        - channelGroupId: 60b84981-2a09-4980-adcf-f290e3b69ba9
+          createdAt: 2020-02-06T20:15:57+07:00
+          image: http://minio-indibox-plus-storage-indibox-plus-dev.vsan-apps.playcourt.id/channels/image/91e0eaf5-b247-4128-8ed2-64396a1f0e0a/nettv-701.png
+          isDelete: false
+          name: NET TV
+          channelId: 91e0eaf5-b247-4128-8ed2-64396a1f0e0a
+        message: Get detailchannel succeed
+        code: 200
+    responseGetListChannel:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: true
+        data:
+        - channelGroupId: 60b84981-2a09-4980-adcf-f290e3b69ba9
+          createdAt: 2020-02-06T20:15:57+07:00
+          image: http://minio-indibox-plus-storage-indibox-plus-dev.vsan-apps.playcourt.id/channels/image/91e0eaf5-b247-4128-8ed2-64396a1f0e0a/nettv-701.png
+          isDelete: false
+          name: NET TV
+          channelId: 91e0eaf5-b247-4128-8ed2-64396a1f0e0a
+          updatedAt: 2020-02-06T20:15:57+07:00
+        - channelGroupId: 60b84981-2a09-4980-adcf-f290e3b69ba9
+          createdAt: 2020-02-06T20:15:57+07:00
+          image: http://minio-indibox-plus-storage-indibox-plus-dev.vsan-apps.playcourt.id/channels/image/default.png
+          isDelete: false
+          name: Channel  be test
+          channelId: cd37dbcc-db13-44e1-a3a0-8fefcc0c788e
+        meta:
+          page: 1
+          count: 3
+          totalPage: 1
+          totalData: 2
+        message: Get List channel succeed
+        code: 200
+    responseUpdateChannel:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: true
+        data:
+          channelGroupId: 6bf8f215-6dcc-46b9-bfe0-7982aa77c40e
+          createdAt: 2020-02-06T20:15:57+07:00
+          image: http://minio-indibox-plus-storage-indibox-plus-dev.vsan-apps.playcourt.id/channel-groups/image/default.png
+          isDelete: false
+          name: TES CHANNEL QA
+          channelId: 8e8d4281-4f2c-4c87-b009-6fe56b14562c
+          updatedAt: 2020-02-06T20:15:57+07:00
+        message: Get has been updated
+        code: 201
+    responseSuccessGetDetailChannelGroup:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: true
+        data:
+          channelGroupId: 6bf8f215-6dcc-46b9-bfe0-7982aa77c40e
+          adminId: 06ab6c75-1a38-41f6-a68d-7606ff801ed7
+          name: TES CHANNEL QA
+          image: http://minio-indibox-plus-storage-indibox-plus-dev.vsan-apps.playcourt.id/channel-groups/image/default.png
+          createdAt: 2020-02-06T20:15:57+07:00
+          isDelete: false
+          channels: []
+        message: Get detail channel group succeed
+        code: 200
+    responseUpdateChannelGroup:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: true
+        data:
+        - channelGroupId: 60b84981-2a09-4980-adcf-f290e3b69ba9
+          createdAt: 2020-02-06T20:15:57+07:00
+          image: http://minio-indibox-plus-storage-indibox-plus-dev.vsan-apps.playcourt.id/channel-groups/image/default.png
+          isDelete: false
+          adminId: 821101c7-c1cd-46a5-9325-f4647ce8cbd1
+          name: BE Group
+          updatedAt: 2020-02-06T20:15:57+07:00
+        message: update channel group succeed
+        code: 201
+    responseSuccessGetChannelGroup:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: true
+        data:
+        - channelGroupId: 60b84981-2a09-4980-adcf-f290e3b69ba9
+          createdAt: 2020-02-06T20:15:57+07:00
+          image: http://minio-indibox-plus-storage-indibox-plus-dev.vsan-apps.playcourt.id/channel-groups/image/default.png
+          isDelete: false
+          adminId: 821101c7-c1cd-46a5-9325-f4647ce8cbd1
+          name: BE Group
+        meta:
+          page: 1
+          count": 1
+          totalPage": 1
+          totalData": 1
+        message: Get list channel group succeed
+        code: 200
+    bodySendNotifSpesific:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: true
+        data:
+          responses:
+          - success: true
+            messageId: projects/useetv-f2dbc/messages/0:1581392871962771%d514cd4ed514cd4e
+          - success: false
+            error:
+              code: messaging/registration-token-not-registered
+              message: Requested entity was not found.
+          - success: false
+            error:
+              code: messaging/registration-token-not-registered
+              message: Requested entity was not found.
+          successCount: 1
+          failureCount: 2
+        message: success send notification
+        code: 200
+    responseCreateChannelNotAllowed:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: false
+        message: Your role is not allow
+        code: 409
+    loginAdmin:
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      example:
+        username: adminindibox
+        password: adminindibox
+    responseCreateChannel:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: true
+        data:
+          channelGroupId: 6bf8f215-6dcc-46b9-bfe0-7982aa77c40e
+          createdAt: 2020-02-06T20:15:57+07:00
+          image: http://minio-indibox-plus-storage-indibox-plus-dev.vsan-apps.playcourt.id/channels/image/default.png
+          isDelete: false
+          name: Channel QA 123
+          channelId: 8e8d4281-4f2c-4c87-b009-6fe56b14562c
+        message: channel has been created
+        code: 200
+    responseSuccessGetListNotification:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: true
+        data:
+        - notificationId: d4f7be9c-ab78-44f6-bee2-88a3db3482bb
+          title: iphone 7+ 256gb
+          text: ikuti dan menangkan iphone 7 + 256gb
+          type: topic
+          createdAt: 07-Jan-2020 07:17:46
+        - notificationId: d4f7be9c-ab78-44f6-bee2-88a3db3482bb
+          title: iphone 7+ 256gb
+          text: ikuti dan menangkan iphone 7 + 256gb
+          type: topic
+          createdAt: 07-Jan-2020 07:17:46
+        - notificationId: d4f7be9c-ab78-44f6-bee2-88a3db3482bb
+          title: iphone 7+ 256gb
+          text: ikuti dan menangkan iphone 7 + 256gb
+          type: topic
+          createdAt: 07-Jan-2020 07:17:46
+        meta:
+          page: 1
+          size: 3
+          totalPage: 2
+        message: detail notification
+        code: 200
+    responseSuccessGetDetailNotification:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: true
+        data:
+          notificationId: d4f7be9c-ab78-44f6-bee2-88a3db3482bb
+          title: iphone 7+ 256gb
+          text: ikuti dan menangkan iphone 7 + 256gb
+          type: topic
+          target:
+          - topic: NewContent
+          createdAt: 07-Jan-2020 07:17:46
+        message: detail notification
+        code: 200
+    responseSuccessSendNotification:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: true
+        data: projects/indibox-plus-mobile/messages/1950126537443732358
+        message: success send notification
+        code: 200
+    responseGetViewSummary:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: true
+        data:
+          id: 542125
+          label: Total View
+          aggregation:
+          - date: 2019-11-12
+            totalView: 2344
+          - date: 2019-11-13
+            totalView: 2344
+          - date: 2019-11-14
+            totalView: 2344
+        message: get aggregate duration
+        code: 200
+    bodySendNotif:
+      properties:
+        title:
+          type: string
+        text:
+          type: string
+      example:
+        title: string
+        text: string
+    responseAnalysisUser:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: true
+        data:
+          id: 542125
+          label: Total User
+          aggregation:
+          - date: 2019-11-12
+            dataUserSignIn: 34443
+            dataUserNotSignIn: 343
+          - date: 2019-11-13
+            dataUserSignIn: 43
+            dataUserNotSignIn: 33
+          - date: 2019-11-14
+            dataUserSignIn: 4
+            dataUserNotSignIn: 3
+          - date: 2019-11-15
+            dataUserSignIn: 78
+            dataUserNotSignIn: 99
+          - date: 2019-11-16
+            dataUserSignIn: 34443
+            dataUserNotSignIn: 343
+          - date: 2019-11-17
+            dataUserSignIn: 389
+            dataUserNotSignIn: 471
+          - date: 2019-11-18
+            dataUserSignIn: 44
+            dataUserNotSignIn: 43
+          createdDate: 2019-09-08T01:36:33.384Z
+        message: get user aggregation
+        code: 200
+    responseSuccessGetSummaryContent:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: true
+        data:
+        - month: 4
+          countLike: 515
+        - month: 3
+          countLike: 34
+        message: Get Analysis Content
+        code: 200
+    responseSuccessGetSummaryCommentContent:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: true
+        data:
+        - month: 4
+          countComment: 515
+        - month: 3
+          countComment: 34
+        message: Get Analysis Content
+        code: 200
+    responseSuccessGetSummaryViewContent:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: true
+        data:
+        - month: 4
+          countView: 33
+          countDuration: 63670
+        - month: 3
+          countView: 34
+          countDuration: 6370
+        message: Get Analysis Content
+        code: 200
+    responseGetDailyActive:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: true
+        data:
+        - date: 2019-11-1
+          user_active: 23
+          user_guest: 444
+        - date: 2019-11-2
+          user_active: 23
+          user_guest: 444
+        - date: 2019-11-3
+          user_active: 23
+          user_guest: 444
+        - date: 2019-11-4
+          user_active: 23
+          user_guest: 444
+        - date: 2019-11-5
+          user_active: 23
+          user_guest: 444
+        - date: 2019-11-6
+          user_active: 23
+          user_guest: 444
+        - date: 2019-11-7
+          user_active: 23
+          user_guest: 444
+        message: Get Analysis User
+        code: 200
+    responseDeletetags:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: true
+        message: tags is succesfully deleted
+        code: 200
+    responseUpdateTags:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: true
+        message: tags is succesfully updated
+        code: 200
+    responseSuccessDeleteAdmin:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: true
+        message: user is succesfully deleted
+        code: 200
+    responseSuccessUpdateAdmin:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: true
+        message: Update Admin
+        code: 201
+    bodyUpdateTags:
+      properties:
+        name:
+          type: string
+      example:
+        name: sinema
+    bodyAddTags:
+      properties:
+        name:
+          type: string
+        categoryId:
+          type: string
+      example:
+        name: sinema
+    responseGetTags:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: true
+        data:
+        - tagsId: 1
+          name: Korean
+        - tagsId: 2
+          name: Movie
+        meta:
+          page: 1
+          totalPage: 1
+          totalData: 2
+          totalDataOnPage: 2
+        messsage: List Tag
+        code: 200
+    responseSuccessSearch:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: true
+        data:
+        - contentId: 1
+          title: atta halilintar gen halilintar
+          description: keluarga atta halilintar
+          url: https://edgejt8.useetv.com/joss/edgeantv/playlist.m3u8?stime=20191112020000&etime=20191112020000&encoded=0d251c2c688e6bc046f6a
+          image: ""
+          year: 2019
+          tags:
+          - tagsId: 1
+            name: drama
+          - tagsId: 2
+            name: tv
+          creator:
+            creatorId: 1
+            creatorName: Atta Halilintar
+          status: active
+          sequence: 1
+          type: vod
+          countView: 5
+          createdAt: 2019-11-08T01:36:33.384Z
+          updatedAt: 2019-11-08T01:36:33.384Z
+        - contentId: 2
+          title: atta halilintar ke grebek
+          description: atta halilintar ke grebek
+          url: https://edgejt8.useetv.com/joss/edgeantv/playlist.m3u8?stime=20191112020000&etime=20191112020000&encoded=0d251c2c688e6bc046f6a
+          image: ""
+          year: 2019
+          tags:
+          - tagsId: 1
+            name: drama
+          - tagsId: 2
+            name: tv
+          creator:
+            creatorId: 1
+            creatorName: Atta Halilintar
+          status: active
+          sequence: 1
+          type: vod
+          countView: 5
+          createdAt: 2019-11-08T01:36:33.384Z
+          updatedAt: 2019-11-08T01:36:33.384Z
+        meta:
+          page: 1
+          totalPage: 3
+          totalData: 20
+          totalDataOnPage: 5
+        message: list of search
+        code: 200
+    searchContent:
+      properties:
+        keyword:
+          type: string
+      example:
+        keyword: Atta Halilintar
+    bodyUpdateCategory1:
+      properties:
+        name:
+          type: string
+        icon:
+          type: string
+        sequence:
+          type: integer
+        active:
+          type: integer
+      example:
+        name: Live Channel
+        tags:
+        - tagId: 1
+        icon: https://lh3.googleusercontent.com/d/1EVCKWhxlA6goAA7cnRzKnNr2SOB2KeJn=s220?authuser=0
+    responseDeleteContent:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: true
+        message: content is succesfully deleted
+        code: 200
+    updateContent1:
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        image:
+          type: string
+      example:
+        title: Atta Halilintar
+        description: video atta Halilintar
+        image: https://www.useetv.com/assets/images/channel/logogrey/grey_logo_useesport_small.png?v=2.0.0.13
+    responseUpdateContent:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: true
+        message: content is succesfully updated
+        code: 200
+    responseSuccessInsertBulk:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: true
+        message: content is succesfully created
+        code: 200
+    insertbulk:
+      properties:
+        contentList:
+          type: object
+      example:
+        contentList:
+        - title: Atta Halilintar
+          description: video atta Halilintar
+          url: https://vod1.useetv.com/vod/_definst_/mp4:edukasi/Apa Adanya Saja Dom-web.mp4/Playlist.m3u8
+          image: https://www.useetv.com/assets/images/channel/logogrey/grey_logo_useesport_small.png?v=2.0.0.13
+          year: 2019
+          tags:
+          - tagsId: 3
+            name: atta
+          - tagsId: 4
+            name: trending
+          creator:
+            creatorId: 1
+            creatorName: Atta Halilintar
+          status: active
+          type: vod
+        - title: 'Star Wars: The Rise of Skywalker | Final Trailer'
+          description: 'Star Wars: The Rise of Skywalker | Final Trailer'
+          url: https://cdnjt21.useetv.com/tvod/1573267500/1573268400/net.m3u8?stime=20191112010000&etime=20191112020000&encoded=09e4ef0445454218481a2
+          image: https://i.ytimg.com/vi/8Qn_spdM5Zg/mqdefault.jpg
+          year: 2019
+          status: active
+          type: vod
+        - title: 'Star Wars: The Rise of Skywalker | Final Trailer'
+          description: 'Star Wars: The Rise of Skywalker | Final Trailer'
+          url: https://cdnjt21.useetv.com/tvod/1573267500/1573268400/net.m3u8?stime=20191112010000&etime=20191112020000&encoded=09e4ef0445454218481a2
+          image: https://i.ytimg.com/vi/8Qn_spdM5Zg/mqdefault.jpg
+          year: 2019
+          status: active
+          type: vod
+        - title: 'Star Wars: The Rise of Skywalker | Final Trailer'
+          description: 'Star Wars: The Rise of Skywalker | Final Trailer'
+          url: https://cdnjt21.useetv.com/tvod/1573267500/1573268400/net.m3u8?stime=20191112010000&etime=20191112020000&encoded=09e4ef0445454218481a2
+          image: https://i.ytimg.com/vi/8Qn_spdM5Zg/mqdefault.jpg
+          year: 2019
+          status: active
+          type: vod
+        - title: 'Star Wars: The Rise of Skywalker | Final Trailer'
+          description: 'Star Wars: The Rise of Skywalker | Final Trailer'
+          url: https://cdnjt21.useetv.com/tvod/1573267500/1573268400/net.m3u8?stime=20191112010000&etime=20191112020000&encoded=09e4ef0445454218481a2
+          image: https://i.ytimg.com/vi/8Qn_spdM5Zg/mqdefault.jpg
+          year: 2019
+          status: active
+          type: vod
+        - title: antv
+          description: tv antv
+          url: https://edgejt8.useetv.com/joss/edgeantv/playlist.m3u8?stime=20191112020000&etime=20191112020000&encoded=0d251c2c688e6bc046f6a
+          image: https://www.useetv.com/assets/images/channel/logogrey/grey_logo_useesport_small.png?v=2.0.0.13
+          year: 2019
+          status: active
+          type: vod
+    responseGetContent1:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: true
+        data:
+          contentId: 1
+          contentDetailId: 23
+          title: Popeye for President
+          description: Popeye and Bluto are running for president
+          duration: 366
+          image: ""
+          year: 2019
+          tags:
+          - tagsId: 1
+            name: drama
+          - tagsId: 2
+            name: tv
+          creator: {}
+          status: active
+          sequence: ""
+          type: vod
+          countView: 45420
+          star: 3.5
+          shareCount: 0
+          likeCount: 0
+          episodeTotal: 1
+          productId: 37
+          vPosterPhone: http://indibox-cms-indibox-dev.vsan-apps.playcourt.id/xmediatv/public/upload/videoVerpic/203503d9-1858-4e28-8bb8-726cc827f78d_phoneVerpic_vertical.jpg
+          vPosterTab: ""
+          vPosterTv: http://indibox-cms-indibox-dev.vsan-apps.playcourt.id/xmediatv/public/upload/videoVerpic/203503d9-1858-4e28-8bb8-726cc827f78d_tvVerpic_vertical.jpg
+          hPosterPhone: http://indibox-cms-indibox-dev.vsan-apps.playcourt.id/xmediatv/public/upload/videoVerpic/203503d9-1858-4e28-8bb8-726cc827f78d_phoneVerpic_vertical.jpg
+          hPosterTab: ""
+          hPosterTv: ""
+          parentLock: "N"
+          screenWriter: Jack Mercer
+          mediaType: vod
+          idAds: "N"
+          hitCount: 45242
+          provider:
+            icon: ""
+            logo: ""
+            providerName: Telkom
+            providerCode: Telkom
+            poster: ""
+          trailers: {}
+          grade: Ⅰ
+          actor: Jack Mercer, Mae Questel Jackson Beck
+          quality: FHD,HD SD auto
+          language: English
+          isDownload: "N"
+          templateModel: VARIETY
+          createdAt: 2019-11-08T01:36:33.384Z
+          updatedAt: 2019-11-08T01:36:33.384Z
+    responseGetContent:
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+        data:
+          type: array
+        code:
+          type: integer
+      example:
+        status: ok
+        code: 0
+        message: ""
+        data:
+        - contentId: ab521065-64c8-4192-aa2d-c1ae11b8d6db
+          title: 'Membaca Al Balad  '
+          desc: desc
+          url: "1"
+          createdAt: 15-Apr-2020 01:28:31
+          updatedAt: 22-Apr-2020 02:46:55
+        - contentId: af2ac20b-f262-48f3-a1be-bd2978d6efe6
+          title: PETUALANGAN SI UNYIL S1 01 - PENJAGA TEBU
+          desc: ""
+          url: ""
+          createdAt: 15-Apr-2020 01:28:32
+          updatedAt: 15-Apr-2020 01:28:32
+        - contentId: e653d0fa-de1f-4e28-9e79-9f68efe53534
+          title: Popeye for President
+          desc: Popeye and Bluto are running for president; it's election day, the
+            vote is tied, and Olive is the only remaining voter.
+          url: ""
+          createdAt: 15-Apr-2020 01:28:32
+          updatedAt: 15-Apr-2020 01:28:32
+        - contentId: 9da94304-ce09-4f96-8b2c-a41edc3ccbe2
+          title: Popeye the Sailor Meets Ali Baba's Forty Thieves
+          desc: Popeye the Sailor, accompanied by Olive Oyl and Wimpy, is dispatched
+            to stop the dreaded bandit Abu Hassan and his force of forty thieves.
+          url: ""
+          createdAt: 15-Apr-2020 01:28:32
+          updatedAt: 15-Apr-2020 01:28:32
+        - contentId: a52d55c0-282d-4100-89af-6f15961ca897
+          title: Membaca Asy Syams
+          desc: deskripsi
+          url: "2"
+          createdAt: 15-Apr-2020 01:28:32
+          updatedAt: 22-Apr-2020 02:02:20
+    responseAdminNotFound:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: false
+        data: ""
+        message: admin is not found
+        code: 404
+    responseSuccessGetOneAdmin:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: true
+        data:
+          id: a8837ffd-aad3-4eba-977c-6895d512c7b5
+          username: adminsuper123
+          password: a95e294dbf17dc6a1d57a46b76dbcbb6
+          email: rizki123@gmail.com
+          fullName: Rizki Pratama
+          role: admin.super
+          createdAt: 2019-11-08T01:36:33.384Z
+          updatedAt: 2019-11-08T01:36:33.384Z
+    responseLoginAdmin:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        response:
+          type: integer
+      example:
+        success: true
+        data: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImZpbmFuY2VhZG1pbjEiLCJzdWIiOiI5MDY0OTczOS0yZTA2LTRhOWYtYjNlOC1lZDcwMjA0NmJmY2QiLCJpYXQiOjE1NjQ2NDQ0NzksImV4cCI6MTU2NDY1MDQ3OSwiYXVkIjoiOTdiMzMxOTMtNDNmZi00ZTU4LTkxMjQtYjNhOWI5ZjcyYzM0IiwiaXNzIjoidGVsa29tZGV2In0.P__FVACg5f8jYKIuQ6ESmNfU6P4T0o3SJqdP-Z6TMpXJXnDqM7MSRupEjZRTNZagGGYmUcPI-D2q5BTBky8T_1iGKCX2AnovSlAOgPCfNHBQacRwEFJnJEdDDTYbNdhqoizRM5G0Ii3sxOCAKPnzOeVikjLII-XSrBQxr_qvv0YHNLzL9DDmh5eVxkM96j0rEH0JQA1JstgEBcFOJLuQXJRfyhI_s_2TukjDkx6sh_W1UZukXmB7xv1DvtCOzluVmhx30oveDtYNxXgp63hbclcsrQ6v1Q7CzfTJLlKhfxuy-ULPD3mLig-AhPNyXNZ9rF8ZMYuJqo8TJLAMpk3wK5Gu8HZvVFQbra05XjA1NmviwXQBjYQluujuzXKG0Pc7SZim_m-Qr8pSp1E_reZlhdMGAK9t97DAZ-f2qHtyTbuulj05VPjAt0m0wwN_CJTunudCvUKJ3HasP7ZBtTI4k-iLq1UR0Gs2JYFHccLvBog1PjHl1xm8Ppth0f6oTJRd5OPWVgiXlqH6fH6ZgHSKpKsVupIrr_6V0r2-gNjSNhCMND_THYil6lwdu1wQLgfF9bncU1MZ-lQT9_U45wVCKqogWESGvLgdbwbt_V6se5tm9gf3L4ICsVq0FNc1pU_i-gdV0i9iA54wx8JFT3xjQhb09uNRB768FjYzMDbo_DI
+        message: Login Admin
+        response: 200
+    responseSuccessGetAdmin:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: true
+        data:
+        - createdAt: 2019-11-08T01:36:33.384Z
+          role: 1
+          isDelete: false
+          adminId: a8837ffd-aad3-4eba-977c-6895d512c7b5
+          fullName: Anwar Fuad
+          email: rizki123@gmail.com
+          username: adminsuper123
+          updatedAt: 2019-11-08T01:36:33.384Z
+        - createdAt: 2020-01-23T02:08:20+07:00
+          role: 1
+          isDelete: false
+          adminId: 0c976d64-8712-4359-a914-8b9a22eaf4e2
+          fullName: testes
+          email: testadminbaru@indibox.com
+          username: testadminbaru2
+          updatedAt: 2020-01-23T02:08:20+07:00
+        meta:
+          page: 1
+          totalPage: 2
+          totalData: 13
+          totalDataOnPage: 10
+        message: List Admin
+        code: 200
+    responseAdminAlreadyExixst:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: false
+        data: ""
+        message: username has been registered
+        code: 409
+    responseSuccessAddAdmin:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: true
+        message: Create Admin
+        code: 201
+    bodyAddAdmin:
+      properties:
+        adminId:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+        email:
+          type: string
+        fullName:
+          type: string
+        role:
+          type: string
+      example:
+        adminId: 01870880-22d5-4ed4-b910-e98e84e51543
+        username: admin@gmail.com
+        password: admin
+        email: admin@gmail.com
+        fullName: admin super 1
+        role: guest
+    responseListCustomer:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: true
+        data:
+        - userId: e713b7f9-aedd-4ac5-9542-e3bd85910c6d
+          username: Latri
+          email: latri@gmail.com
+          deviceId: ""
+          fcmToken: ""
+          point: 0
+          profilePhoto: images.jpg
+          createdAt: 2019-08-01 07:53:32
+          updatedAt: 2019-08-01 07:53:32
+          lastLogin: 2019-08-01 07:53:32
+        - userId: e713b7f9-aedd-4ac5-9542-e3bd85910c6d
+          username: Latri
+          email: latri@gmail.com
+          deviceId: ""
+          fcmToken: ""
+          point: 0
+          profilePhoto: images.jpg
+          createdAt: 2019-08-01 07:53:32
+          updatedAt: 2019-08-01 07:53:32
+          lastLogin: 2019-08-01 07:53:32
+        meta:
+          page: 1
+          totalPage: 3
+          totalData: 20
+          totalDataOnPage: 5
+        message: List User
+        code: 200
+    responseUpdateCategories:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: true
+        message: category is successfuly updated
+        code: 200
+    responseDeleteCategories:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: true
+        message: category is successfuly deleted
+        code: 200
+    bodyAddCategory:
+      properties:
+        name:
+          type: string
+        icon:
+          type: string
+      example:
+        name: News
+        tags:
+        - tagId: 6da41850-0543-4f3b-adc7-8198aa0cb890
+        - tagId: 6da81850-0546-4f3b-adc7-8198aa0cb890
+    responseForbidden:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: false
+        message: not permitted to access
+        code: 403
+    responseAddCategories:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: true
+        data:
+          tagId: eb156b3b-b76a-495d-a43b-2702825be1d2
+          name: Adventure
+          createdAt: 2020-04-23T04:23:28.693Z
+        message: tag is successfuly created
+        code: 200
+    responseAddTags:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: true
+        message: category is successfuly created
+        code: 200
+    responseGetOneCategories:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: true
+        data:
+          categoryId: 1
+          name: Live Channel
+          icon: https://lh3.googleusercontent.com/d/1EVCKWhxlA6goAA7cnRzKnNr2SOB2KeJn=s220?authuser=0
+          tags:
+          - tagsId: 1
+            name: tv
+          - tagsId: 2
+            name: live
+          sequence: 1
+          createdAt: 2020-01-29T15:44:25.148Z
+    responseGetCategories:
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+        message:
+          type: string
+        code:
+          type: integer
+      example:
+        success: true
+        data:
+        - categoryId: 1
+          name: Live Channel
+          icon: https://lh3.googleusercontent.com/d/1EVCKWhxlA6goAA7cnRzKnNr2SOB2KeJn=s220?authuser=0
+          tags:
+          - tagsId: 1
+            name: tv
+          - tagsId: 2
+            name: live
+          sequence: 1
+          createdAt: 2020-01-29T15:44:25.148Z
+        - categoryId: 2
+          name: VOD
+          icon: https://lh3.googleusercontent.com/d/1EVCKWhxlA6goAA7cnRzKnNr2SOB2KeJn=s220?authuser=0
+          tags:
+          - tagsId: 3
+            name: video
+          - tagsId: 4
+            name: happening
+          sequence: 2
+          createdAt: 2020-01-29T15:44:25.148Z
+        - categoryId: 3
+          name: Infotainment
+          icon: https://lh3.googleusercontent.com/d/1EVCKWhxlA6goAA7cnRzKnNr2SOB2KeJn=s220?authuser=0
+          tags:
+          - tagsId: 5
+            name: hot
+          - tagsId: 6
+            name: gosip
+          sequence: 3
+          createdAt: 2020-01-29T15:44:25.148Z
+        - categoryId: 4
+          name: Olahraga
+          icon: https://lh3.googleusercontent.com/d/1EVCKWhxlA6goAA7cnRzKnNr2SOB2KeJn=s220?authuser=0
+          tags: []
+          sequence: 4
+          createdAt: 2020-01-29T15:44:25.148Z
+        - categoryId: 5
+          name: News
+          icon: https://lh3.googleusercontent.com/d/1EVCKWhxlA6goAA7cnRzKnNr2SOB2KeJn=s220?authuser=0
+          sequence: 5
+          createdAt: 2020-01-29T15:44:25.148Z
+        meta:
+          page: 1
+          size: 10
+          totalPage: 1
+          totalData: 5
+        code: 200
+        message: list of category
+    inline_response_200:
+      oneOf:
+      - $ref: '#/components/schemas/responseSuccessGetSummaryContent'
+      - $ref: '#/components/schemas/responseSuccessGetSummaryViewContent'
+      - $ref: '#/components/schemas/responseSuccessGetSummaryCommentContent'
+    body:
+      type: object
+      properties:
+        channelId:
+          type: string
+        name:
+          type: string
+        image:
+          type: string
+        channelGroupId:
+          type: string
+    body_1:
+      type: object
+      properties:
+        name:
+          type: string
+        image:
+          type: string
+        channelGroupId:
+          type: string
+    body_2:
+      type: object
+      properties:
+        name:
+          type: string
+        image:
+          type: string
+        adminId:
+          type: string
+        channelGroupId:
+          type: string
+    body_3:
+      type: object
+      properties:
+        name:
+          type: string
+        image:
+          type: string
+        adminId:
+          type: string
+        channelId:
+          type: string
+  securitySchemes:
+    basicAuth:
+      type: http
+      description: 'user : telkom, password : da1c25d8-37c8-41b1-afe2-42dd4825bfeaij'
+      scheme: basic
+    bearerToken:
+      type: http
+      description: token dari login
+      scheme: bearer
