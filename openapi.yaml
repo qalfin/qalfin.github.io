@@ -14,7 +14,7 @@ paths:
       tags:
       - List Combination
       summary: get List Sequence
-      description: get List Combination
+      description: get List Combination <img src="./Screenshot 2021-03-08 09:45:49.png" />
       parameters:
       - name: page
         in: query
