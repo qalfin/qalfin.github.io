@@ -44,7 +44,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/pageStart'
         "400":
-          description: Page must start from 1
+          description: Page must start from 112
           content:
             application/json:
               schema:
