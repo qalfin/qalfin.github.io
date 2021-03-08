@@ -37,7 +37,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/responseGetListCombination'
-        "400":
+        "401":
           description: Page must start from 1
           content:
             application/json:
