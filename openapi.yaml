@@ -63,7 +63,7 @@ paths:
       tags:
       - List Combination
       summary: update combination
-      description: update combination
+      description: <img src="./Screenshot 2021-03-08 09:45:49.png" />
       parameters:
       - name: combinationId
         in: path
