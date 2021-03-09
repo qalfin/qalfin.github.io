@@ -39,9 +39,9 @@ paths:
         explode: true
         schema:
           type: string
-           enum:
-              - free
-              - non_free
+          enum:
+          - free
+          - non_free
       responses:
         "200":
           description: OK
