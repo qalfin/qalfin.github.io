@@ -2481,9 +2481,8 @@ components:
   securitySchemes:
     basicAuth:
       type: http
-      description: 'user : telkom, password : da1c25d8-37c8-41b1-afe2-42dd4825bfeaij'
       scheme: basic
     bearerToken:
       type: http
-      description: token dari login
+      description: token from Registered Device / Login
       scheme: bearer
